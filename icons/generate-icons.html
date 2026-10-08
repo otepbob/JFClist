@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head><title>Jabra Floorwalk Icon Generator</title></head>
+<body>
+<canvas id="c192" width="192" height="192" style="display:none"></canvas>
+<canvas id="c512" width="512" height="512" style="display:none"></canvas>
+<script>
+function drawIcon(canvas, size) {
+  const ctx = canvas.getContext('2d');
+  const s = size;
+  const u = s / 192;
+
+  // Background — royal blue rounded rect
+  const r = 36 * u;
+  ctx.beginPath();
+  ctx.moveTo(r, 0); ctx.lineTo(s - r, 0); ctx.quadraticCurveTo(s, 0, s, r);
+  ctx.lineTo(s, s - r); ctx.quadraticCurveTo(s, s, s - r, s);
+  ctx.lineTo(r, s); ctx.quadraticCurveTo(0, s, 0, s - r);
+  ctx.lineTo(0, r); ctx.quadraticCurveTo(0, 0, r, 0);
+  ctx.closePath();
+  ctx.fillStyle = '#4169e1';
+  ctx.fill();
+
+  // Headband arc
+  ctx.beginPath();
+  ctx.arc(96 * u, 108 * u, 54 * u, Math.PI, 0, false);
+  ctx.strokeStyle = '#f5c500';
+  ctx.lineWidth = 10 * u;
+  ctx.lineCap = 'round';
+  ctx.stroke();
+
+  // Left ear cup outer
+  roundRect(ctx, 28 * u, 100 * u, 30 * u, 44 * u, 12 * u, '#f5c500');
+  // Left ear cup inner (cutout)
+  roundRect(ctx, 34 * u, 108 * u, 18 * u, 28 * u, 8 * u, '#4169e1');
+
+  // Right ear cup outer
+  roundRect(ctx, 134 * u, 100 * u, 30 * u, 44 * u, 12 * u, '#f5c500');
+  // Right ear cup inner (cutout)
+  roundRect(ctx, 140 * u, 108 * u, 18 * u, 28 * u, 8 * u, '#4169e1');
+
+  // "JABRA" text
+  ctx.font = `900 ${22 * u}px "Arial Black", Arial`;
+  ctx.fillStyle = '#f5c500';
+  ctx.textAlign = 'center';
+  ctx.letterSpacing = `${1 * u}px`;
+  ctx.fillText('JABRA', 96 * u, 158 * u);
+
+  // "FLOORWALK" text
+  ctx.font = `700 ${13 * u}px Arial`;
+  ctx.fillStyle = 'rgba(255,255,255,0.75)';
+  ctx.letterSpacing = `${2 * u}px`;
+  ctx.fillText('FLOORWALK', 96 * u, 176 * u);
+}
+
+function roundRect(ctx, x, y, w, h, r, color) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y); ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r); ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h); ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r); ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+  ctx.fillStyle = color;
+  ctx.fill();
+}
+
+const c192 = document.getElementById('c192');
+const c512 = document.getElementById('c512');
+drawIcon(c192, 192);
+drawIcon(c512, 512);
+
+document.body.innerHTML += '<p style="font-family:sans-serif;padding:1rem;">Right-click each image and save, or use the download links below.<br><br>'
+  + '<a download="icon-192.png" id="dl192">⬇ Download icon-192.png</a>&nbsp;&nbsp;<a download="icon-512.png" id="dl512">⬇ Download icon-512.png</a></p>';
+document.getElementById('dl192').href = c192.toDataURL('image/png');
+document.getElementById('dl512').href = c512.toDataURL('image/png');
+c192.style.display = 'block';
+c512.style.display = 'block';
+</script>
+</body>
+</html>
